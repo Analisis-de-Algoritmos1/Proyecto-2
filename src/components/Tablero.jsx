@@ -1,4 +1,5 @@
 
+
 import Celda from "./Celda";
 
 // Dimensiones del tablero de Batalla Naval.
@@ -31,7 +32,13 @@ const LETRAS_COLUMNAS = Array.from(
  * @returns {JSX.Element} Tablero de 10 filas y 10 columnas
  *                        construido con componentes Celda.
  */
-function Tablero({ celdas = [], titulo = "Tablero", mostrarBarcos = false, alSeleccionar, deshabilitado = false}) {
+function Tablero({
+  celdas = [],
+  titulo = "Tablero",
+  mostrarBarcos = false,
+  alSeleccionar,
+  deshabilitado = false,
+}) {
   return (
     <section className="tablero-contenedor" aria-label={titulo}>
       <h2>{titulo}</h2>
