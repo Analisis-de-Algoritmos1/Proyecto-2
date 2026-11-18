@@ -54,7 +54,7 @@ try {
 
   console.log("Rechaza 250: false");
 
-} catch (error) {
+} catch {
 
   console.log("Rechaza 250: true");
 }
