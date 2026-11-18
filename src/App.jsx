@@ -1,122 +1,120 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useState } from "react";
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+import Tablero from "./components/Tablero";
+import "./styles/juego.css";
+import { TAMANO_TABLERO, TIPOS_BARCOS } from "./config/flota";
+import { generarFlotaAleatoria } from "./services/generadorFlota";
+import { convertirFlotaAMatriz } from "./services/matrizFlota";
 
-      <div className="ticks"></div>
+/**
+ * Función: crearTableroAleatorio
+ *
+ * Descripción:
+ * Genera una flota aleatoria y la convierte en una
+ * matriz de celdas para representar un tablero.
+ *
+ * Entradas:
+ * No recibe parámetros.
+ *
+ * Retorno:
+ * Matriz con los barcos colocados aleatoriamente.
+ */
+function crearTableroAleatorio() {
+  const flota = generarFlotaAleatoria(
+    TIPOS_BARCOS,
+    TAMANO_TABLERO
+  );
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+  return convertirFlotaAMatriz(flota, TAMANO_TABLERO);
 }
 
-export default App
+/**
+ * Función: crearTablerosIniciales
+ *
+ * Descripción:
+ * Crea dos tableros independientes: uno para el
+ * jugador y otro para la máquina.
+ *
+ * Entradas:
+ * No recibe parámetros.
+ *
+ * Retorno:
+ * Objeto con las matrices de ambos tableros.
+ */
+function crearTablerosIniciales() {
+  return {
+    jugador: crearTableroAleatorio(),
+    maquina: crearTableroAleatorio()
+  };
+}
+
+/**
+ * Función: App
+ *
+ * Descripción:
+ * Presenta los tableros de Batalla Naval y permite
+ * generar una nueva distribución de las flotas.
+ *
+ * Entradas:
+ * No recibe parámetros.
+ *
+ * Retorno:
+ * Interfaz principal del juego.
+ */
+function App() {
+  const [tableros, setTableros] = useState(crearTablerosIniciales);
+
+  /**
+   * Función: reiniciarTableros
+   *
+   * Descripción:
+   * Genera nuevas flotas aleatorias para ambos tableros.
+   *
+   * Entradas:
+   * No recibe parámetros.
+   *
+   * Retorno:
+   * No retorna valores.
+   */
+  function reiniciarTableros() {
+    setTableros(crearTablerosIniciales());
+  }
+
+  return (
+    <main className="pantalla-juego">
+      <header className="encabezado-juego">
+        <h1>Batalla Naval </h1>
+
+        <p>
+          Jugador contra máquina
+        </p>
+
+        <button
+          type="button"
+          onClick={reiniciarTableros}
+        >
+          Generar nueva partida
+        </button>
+      </header>
+
+      <section className="tableros-juego">
+        <Tablero
+          titulo="Mis barcos"
+          celdas={tableros.jugador}
+          mostrarBarcos={true}
+          deshabilitado={true}
+        />
+
+        <Tablero
+          titulo="Barcos enemigo"
+          celdas={tableros.maquina}
+          mostrarBarcos={false}
+          deshabilitado={true}
+        />
+      </section>
+    </main>
+  );
+}
+
+export default App;
