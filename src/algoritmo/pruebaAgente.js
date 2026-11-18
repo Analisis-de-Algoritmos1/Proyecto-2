@@ -35,7 +35,7 @@ console.log("=== PRUEBA DEL AGENTE ===");
  * Salida:
  * - Objeto que indica agua.
  */
-function resolverDisparoPrueba(fila, columna) {
+function resolverDisparoPrueba() {
   return { tipo: "agua" };
 }
 

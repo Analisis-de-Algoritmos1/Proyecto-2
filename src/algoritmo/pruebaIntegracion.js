@@ -17,7 +17,7 @@ console.log("=== PRUEBA DE INTEGRACIÓN ===");
  * Entrada: fila y columna.
  * Salida: resultado simulado de agua.
  */
-function resolverPrueba(fila, columna) {
+function resolverPrueba() {
   return { tipo: "agua" };
 }
 
