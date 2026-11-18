@@ -1,6 +1,6 @@
 
-
 import Celda from "./Celda";
+import "../styles/tablero.css";
 
 // Dimensiones del tablero de Batalla Naval.
 const TOTAL_FILAS = 10;

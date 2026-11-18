@@ -1,0 +1,320 @@
+
+/*
+ * Archivo: tablero.css
+ *
+ * Descripción:
+ * Define la apariencia visual del tablero de Batalla Naval,
+ * incluyendo las celdas, coordenadas, barcos y resultados
+ * de los disparos.
+ */
+
+/* Contenedor principal del tablero */
+.tablero-contenedor {
+  --tamano-celda: clamp(28px, 4vw, 46px);
+
+  width: fit-content;
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+
+  background: linear-gradient(180deg, #10283d, #091b2c);
+  border: 2px solid #087fb8;
+  border-radius: 16px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Título del tablero */
+.tablero-contenedor h2 {
+  margin: 0 0 18px;
+  color: #e7f7ff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Organización de filas y columnas */
+.tablero {
+  width: auto;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 3px;
+  table-layout: fixed;
+}
+
+/* Encabezados y celdas de la tabla */
+.tablero th,
+.tablero td {
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-align: center;
+}
+
+/* Letras de las columnas */
+.tablero thead th {
+  height: 28px;
+  color: #a9d6ec;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Números de las filas */
+.tablero tbody th {
+  width: 28px;
+  min-width: 28px;
+  color: #a9d6ec;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Apariencia general de una celda */
+.tablero .celda {
+  position: relative;
+  display: grid;
+  place-items: center;
+
+  width: var(--tamano-celda);
+  height: var(--tamano-celda);
+  min-width: 0;
+  min-height: 0;
+
+  padding: 0;
+  margin: 0;
+
+  box-sizing: border-box;
+  overflow: hidden;
+
+  border: 1px solid #4ea1c6;
+  border-radius: 5px;
+
+  background: linear-gradient(180deg, #1d7ba8, #165e82);
+  color: #ffffff;
+
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s,
+    background-color 0.15s,
+    box-shadow 0.15s;
+}
+
+/* Efecto de iluminación sobre el agua */
+.tablero .celda::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    transparent 50%,
+    rgba(0, 0, 0, 0.12)
+  );
+
+  pointer-events: none;
+}
+
+/* Celda disponible */
+.tablero .celda--sin-disparo {
+  background: linear-gradient(180deg, #1d7ba8, #165e82);
+}
+
+/* Barco propio visible */
+.tablero .celda--barco {
+  background: linear-gradient(180deg, #617887, #40586b);
+  border-color: #b8ccd9;
+}
+
+/* Figura de barco sobre la celda */
+.tablero .celda--barco::after {
+  content: "";
+  position: absolute;
+
+  width: 72%;
+  height: 38%;
+
+  background: linear-gradient(
+    180deg,
+    #eef4f8,
+    #a1b4c2 55%,
+    #526979
+  );
+
+  border: 1px solid #d5e0e8;
+  border-radius: 45% 45% 30% 30%;
+
+  box-shadow:
+    inset 0 -3px 0 rgba(0, 0, 0, 0.18),
+    0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Disparo fallido: marca gris */
+.tablero .celda--agua {
+  background: linear-gradient(180deg, #637480, #414e5a);
+  border-color: #a8b5be;
+
+  color: #e8edf0;
+  font-size: 1.3rem;
+}
+
+
+
+/* Celda con impacto */
+.tablero .celda--impacto {
+  position: relative;
+
+  background: radial-gradient(
+    circle at center,
+    #e96528 0%,
+    #a92e1b 55%,
+    #49151b 100%
+  );
+
+  border: 1px solid #ffad56;
+
+  /* Ocultar el símbolo original de impacto */
+  color: transparent;
+  font-size: 0;
+
+  overflow: hidden;
+}
+
+/* Resplandor que simula el calor del fuego */
+.tablero .celda--impacto::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  z-index: 1;
+
+  background: radial-gradient(
+    circle,
+    rgba(255, 220, 80, 0.8) 0%,
+    rgba(255, 110, 20, 0.45) 45%,
+    transparent 75%
+  );
+
+  border-radius: 50%;
+  filter: blur(6px);
+
+  animation: resplandorLlama 0.8s ease-in-out infinite alternate;
+}
+
+/* Llama con silueta natural y tres colores */
+.tablero .celda--impacto::after {
+  content: "";
+  position: absolute;
+
+  left: 50%;
+  bottom: 5%;
+  z-index: 2;
+
+  width: 70%;
+  height: 85%;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 64'%3E%3Cpath d='M24 2C30 12 30 20 25 29C33 26 34 20 33 14C40 23 44 33 44 42C44 54 35 62 24 62C13 62 4 54 4 43C4 33 10 26 15 18C14 27 18 33 21 35C18 24 22 15 24 2Z' fill='%23ff6a19'/%3E%3Cpath d='M24 23C28 31 25 38 23 43C28 42 32 38 32 34C36 40 38 45 38 50C38 57 32 61 24 61C16 61 10 56 10 49C10 42 14 38 17 34C16 41 20 45 21 47C20 39 22 31 24 23Z' fill='%23ffd23f'/%3E%3Cpath d='M24 38C25 43 28 47 28 51C28 55 26 58 23 58C19 58 17 55 17 51C17 47 21 43 24 38Z' fill='%23fff4b5'/%3E%3C/svg%3E");
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  transform-origin: center bottom;
+
+  filter: drop-shadow(0 0 5px rgba(255, 130, 20, 0.8));
+
+  animation: llamaNatural 1.1s ease-in-out infinite alternate;
+}
+
+/* Movimiento suave de la llama */
+@keyframes llamaNatural {
+  0% {
+    transform: translateX(-50%) translateY(1px)
+      rotate(-3deg) scale(0.95, 0.96);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-1px)
+      rotate(2deg) scale(1, 1.06);
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(-2px)
+      rotate(-2deg) scale(0.97, 1.02);
+  }
+}
+
+/* Variación del resplandor */
+@keyframes resplandorLlama {
+  from {
+    opacity: 0.65;
+    transform: scale(0.85);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+/* Respetar preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .tablero .celda--impacto::before,
+  .tablero .celda--impacto::after {
+    animation: none;
+  }
+
+  .tablero .celda--impacto::after {
+    transform: translateX(-50%);
+  }
+}
+
+
+
+/* Barco hundido */
+.tablero .celda--hundido {
+  background: linear-gradient(180deg, #8f2632, #49121d);
+  border-color: #d46c79;
+
+  color: #ffffff;
+  font-size: 1.3rem;
+}
+
+/* Interacción con celdas disponibles */
+.tablero .celda:not(:disabled):hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 10px rgba(115, 210, 255, 0.3);
+}
+
+/* Selección mediante teclado */
+.tablero .celda:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Evitar que las celdas deshabilitadas pierdan sus colores */
+.tablero .celda:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+/* Adaptación a pantallas pequeñas */
+@media (max-width: 480px) {
+  .tablero-contenedor {
+    --tamano-celda: 25px;
+
+    margin: 12px auto;
+    padding: 10px;
+  }
+
+  .tablero {
+    border-spacing: 2px;
+  }
+
+  .tablero .celda {
+    font-size: 0.95rem;
+  }
+}
