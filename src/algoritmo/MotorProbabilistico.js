@@ -6,43 +6,18 @@ import { SeleccionObjetivo } from "./SeleccionObjetivo.js";
 
 /**
  * Clase: MotorProbabilistico
- *
- * Descripción:
- * Coordina el algoritmo probabilístico
- * para recomendar disparos en Batalla Naval.
- *
- * Utiliza las configuraciones posibles de
- * la flota sin consultar los barcos reales.
- *
- * Entrada:
- * - Tamaño del tablero.
- * - Resultados de los disparos anteriores.
- * - Cantidad de simulaciones solicitadas.
- *
- * Salida:
- * - Matriz de probabilidades.
- * - Recomendación de disparo.
- * - Cantidad de configuraciones válidas.
- * - Cantidad de simulaciones realizadas.
- * - Tiempo empleado en el análisis.
+ * Función: coordinar el análisis probabilístico.
+ * Entrada: disparos conocidos y cantidad de simulaciones.
+ * Salida: probabilidades, recomendación y métricas.
  */
 export class MotorProbabilistico {
 
   /**
    * Función: constructor
-   *
-   * Descripción:
-   * Inicializa los componentes necesarios
-   * para ejecutar el algoritmo.
-   *
-   * Entrada:
-   * - tamanoTablero: tamaño del tablero.
-   *
-   * Salida:
-   * - Instancia del motor configurada.
+   * Entrada: tamaño del tablero.
+   * Salida: componentes del motor inicializados.
    */
   constructor(tamanoTablero = 10) {
-
     this.tamanoTablero = tamanoTablero;
 
     this.generador = new GeneradorSimulaciones(
@@ -62,20 +37,10 @@ export class MotorProbabilistico {
 
   /**
    * Función: validarCantidad
-   *
-   * Descripción:
-   * Comprueba que la cantidad solicitada
-   * de simulaciones sea válida.
-   *
-   * Entrada:
-   * - cantidad: número de simulaciones.
-   *
-   * Salida:
-   * - true cuando la cantidad es correcta.
-   * - Error cuando la cantidad es inválida.
+   * Entrada: cantidad de simulaciones.
+   * Salida: true o error si la cantidad es inválida.
    */
   validarCantidad(cantidad) {
-
     if (
       !Number.isInteger(cantidad) ||
       cantidad <= 0
@@ -90,111 +55,73 @@ export class MotorProbabilistico {
 
   /**
    * Función: analizar
-   *
-   * Descripción:
-   * Ejecuta el análisis probabilístico completo.
-   *
-   * Primero genera flotas respetando los
-   * disparos conocidos. Después valida las
-   * configuraciones, calcula probabilidades
-   * y selecciona el siguiente objetivo.
-   *
-   * Entrada:
-   * - resultados: objeto con:
-   *   agua, impactos y hundidos.
-   * - cantidadSimulaciones: número de flotas
-   *   que se intentarán generar.
-   *
-   * Salida:
-   * - Objeto con probabilidades, recomendación,
-   *   simulaciones, configuraciones válidas,
-   *   tiempo de ejecución y estado del análisis.
+   * Entrada: resultados conocidos y cantidad de simulaciones.
+   * Salida: mapa probabilístico, objetivo y estadísticas.
    */
   analizar(resultados = {}, cantidadSimulaciones = 1000) {
 
-    // Verificamos la cantidad solicitada.
     this.validarCantidad(cantidadSimulaciones);
 
     // Registramos el inicio del análisis.
     const inicio = performance.now();
 
-    // Generamos posibles flotas utilizando
-    // la información de los disparos anteriores.
+    // Generamos flotas compatibles con los disparos.
     const simulaciones = this.generador.generarSimulaciones(
       cantidadSimulaciones,
       resultados
     );
 
-    // Registramos las flotas obtenidas.
     const simulacionesGeneradas = simulaciones.length;
 
-    // Comprobamos nuevamente la compatibilidad.
+    // Filtramos nuevamente las configuraciones.
     const configuracionesValidas =
       this.filtro.filtrarSimulaciones(
         simulaciones,
         resultados
       );
 
-    // Contamos las configuraciones aceptadas.
     const totalValidas = configuracionesValidas.length;
 
-    // Calculamos cuántas flotas fueron descartadas.
     const configuracionesDescartadas =
       simulacionesGeneradas - totalValidas;
 
-    // Calculamos la probabilidad de cada celda.
+    // Calculamos las probabilidades por celda.
     const analisis = this.calculadora.calcular(
       configuracionesValidas,
       resultados
     );
 
-    // Seleccionamos la mejor celda disponible.
+    // Seleccionamos la mejor posición disponible.
     const recomendacion = this.selector.seleccionar(
       analisis.probabilidades,
       resultados,
       analisis.hayEstimacion
     );
 
-    // Transformamos el mapa a porcentajes.
+    // Convertimos las probabilidades en porcentajes.
     const porcentajes =
       this.calculadora.convertirPorcentajes(
         analisis.probabilidades
       );
 
-    // Registramos el tiempo total.
+    // Medimos el tiempo total del proceso.
     const tiempoMs = performance.now() - inicio;
 
-    // Verificamos si se consiguió la cantidad
-    // de configuraciones solicitadas.
     const objetivoMuestrasCumplido =
       totalValidas === cantidadSimulaciones;
 
-    // Informamos el resultado del análisis.
     return {
       probabilidades: analisis.probabilidades,
-
       porcentajes,
-
       frecuencias: analisis.frecuencias,
-
       recomendacion,
-
       simulacionesSolicitadas: cantidadSimulaciones,
-
-      // Número de flotas generadas correctamente.
       simulacionesGeneradas,
-
-      // Cantidad que pasó el filtrado final.
       simulacionesRealizadas: simulacionesGeneradas,
-
       configuracionesValidas: totalValidas,
-
       configuracionesDescartadas,
-
       tiempoMs: Math.round(tiempoMs * 100) / 100,
-
       hayEstimacion: analisis.hayEstimacion,
-
       objetivoMuestrasCumplido
     };
   }
