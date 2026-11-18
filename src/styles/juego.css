@@ -1,0 +1,231 @@
+
+/*
+ * Archivo: juego.css
+ *
+ * Descripción:
+ * Define la apariencia de la interfaz principal del juego
+ * Batalla Naval Probabilística, incluyendo el encabezado,
+ * los controles y la distribución de ambos tableros.
+ */
+
+/* =========================================
+   1. CONFIGURACIÓN GENERAL
+   ========================================= */
+
+body {
+  display: block;
+  margin: 0;
+  min-width: 320px;
+
+  background: linear-gradient(
+    180deg,
+    #071b30 0%,
+    #102f4a 100%
+  );
+}
+
+/* Contenedor principal de la aplicación */
+.pantalla-juego {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto;
+  padding: 30px 20px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   2. ENCABEZADO DEL JUEGO
+   ========================================= */
+
+.encabezado-juego {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Título principal */
+.encabezado-juego h1 {
+  margin: 0 0 8px;
+
+  color: #eaf6ff;
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+}
+
+/* Descripción del juego */
+.encabezado-juego p {
+  margin: 0;
+
+  color: #a8c5dc;
+  font-size: 1rem;
+}
+
+/* Botón para iniciar una nueva partida */
+.encabezado-juego button {
+  margin-top: 18px;
+  padding: 12px 22px;
+
+  background: #187bb7;
+  color: #ffffff;
+
+  border: 1px solid #56a9d8;
+  border-radius: 8px;
+
+  font-weight: bold;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Efecto al colocar el cursor */
+.encabezado-juego button:hover {
+  background: #2495d6;
+  transform: translateY(-2px);
+}
+
+/* Accesibilidad mediante teclado */
+.encabezado-juego button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+
+/* =========================================
+   3. DISTRIBUCIÓN DE LOS DOS TABLEROS
+   ========================================= */
+
+/*
+ * Divide el espacio disponible en dos columnas
+ * iguales, dejando una separación entre ellas.
+ */
+.tableros-juego {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+
+  align-items: start;
+  justify-items: stretch;
+
+  width: 100%;
+}
+
+/*
+ * Cada tablero debe ocupar únicamente el espacio
+ * correspondiente a su columna.
+ */
+.tableros-juego .tablero-contenedor {
+  /* Tamaño de las celdas ajustado al ancho de pantalla */
+  --tamano-celda: clamp(28px, 3vw, 38px);
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  margin: 0;
+  padding: 18px 12px;
+
+  box-sizing: border-box;
+
+  /* Evita que la tabla sobresalga del contenedor */
+  overflow-x: auto;
+}
+
+/*
+ * Mantiene las tablas centradas dentro de
+ * sus respectivos contenedores.
+ */
+.tableros-juego .tablero {
+  width: max-content;
+  max-width: 100%;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*
+ * Establece explícitamente las dimensiones de
+ * las celdas en la pantalla principal del juego.
+ */
+.tableros-juego .tablero .celda {
+  width: var(--tamano-celda);
+  height: var(--tamano-celda);
+}
+
+
+/* =========================================
+   4. PANTALLAS MEDIANAS
+   ========================================= */
+
+/*
+ * Cuando no hay suficiente espacio para mostrar
+ * ambos tableros cómodamente, se colocan uno
+ * debajo del otro.
+ */
+@media (max-width: 1050px) {
+  .tableros-juego {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .tableros-juego .tablero-contenedor {
+    --tamano-celda: clamp(28px, 4vw, 44px);
+
+    width: fit-content;
+    max-width: 100%;
+
+    margin: 0 auto;
+    padding: 18px 14px;
+  }
+}
+
+
+/* =========================================
+   5. TELÉFONOS Y PANTALLAS PEQUEÑAS
+   ========================================= */
+
+@media (max-width: 480px) {
+  .pantalla-juego {
+    padding: 20px 8px;
+  }
+
+  .encabezado-juego {
+    margin-bottom: 20px;
+  }
+
+  .encabezado-juego h1 {
+    font-size: 1.6rem;
+  }
+
+  .encabezado-juego button {
+    padding: 10px 16px;
+  }
+
+  .tableros-juego {
+    gap: 18px;
+  }
+
+  .tableros-juego .tablero-contenedor {
+    --tamano-celda: clamp(20px, 5vw, 25px);
+
+    padding: 12px 8px;
+  }
+}
+
+
+/* =========================================
+   6. ACCESIBILIDAD
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .encabezado-juego button {
+    transition: none;
+  }
+
+  .encabezado-juego button:hover {
+    transform: none;
+  }
+}
