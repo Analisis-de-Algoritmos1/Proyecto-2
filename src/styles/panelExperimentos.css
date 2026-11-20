@@ -1,0 +1,204 @@
+
+/*
+ * Archivo: panelExperimentos.css
+ *
+ * Descripción:
+ * Estilos del panel de experimentos probabilísticos.
+ * Permite ejecutar pruebas y visualizar los resultados
+ * de las diferentes cantidades de simulaciones.
+ */
+
+/* Contenedor principal */
+.panel-experimentos {
+  width: min(1100px, 95%);
+  margin: 30px auto;
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    180deg,
+    #10283d,
+    #091b2c
+  );
+
+  border: 2px solid #087fb8;
+  border-radius: 16px;
+
+  color: #e7f7ff;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Título del panel */
+.panel-experimentos h2 {
+  margin: 0 0 12px;
+
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Descripción del experimento */
+.panel-experimentos > p {
+  margin: 10px 0 18px;
+
+  color: #a9d6ec;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Contenedor de botones */
+.panel-experimentos__controles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  margin: 22px 0;
+}
+
+/* Botones para ejecutar simulaciones */
+.panel-experimentos__controles button {
+  padding: 12px 18px;
+
+  background: linear-gradient(
+    180deg,
+    #087fb8,
+    #075983
+  );
+
+  border: 1px solid #22a7e0;
+  border-radius: 9px;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Efecto al pasar el cursor */
+.panel-experimentos__controles button:hover:not(:disabled) {
+  background: linear-gradient(
+    180deg,
+    #149bd8,
+    #087fb8
+  );
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 4px 12px rgba(0, 150, 220, 0.3);
+}
+
+/* Efecto al presionar un botón */
+.panel-experimentos__controles button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Botones bloqueados durante un experimento */
+.panel-experimentos__controles button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Contenedor adaptable de la tabla */
+.panel-experimentos__tabla-contenedor {
+  width: 100%;
+  margin-top: 22px;
+  overflow-x: auto;
+}
+
+/* Tabla de resultados */
+.panel-experimentos__tabla {
+  width: 100%;
+  border-collapse: collapse;
+
+  background-color: #102b41;
+  color: #e7f7ff;
+
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Encabezados de la tabla */
+.panel-experimentos__tabla thead {
+  background-color: #075983;
+}
+
+/* Celdas y encabezados */
+.panel-experimentos__tabla th,
+.panel-experimentos__tabla td {
+  padding: 13px 12px;
+
+  border: 1px solid #315a72;
+  white-space: nowrap;
+}
+
+/* Encabezados */
+.panel-experimentos__tabla th {
+  font-weight: 700;
+}
+
+/* Filas alternadas */
+.panel-experimentos__tabla tbody tr:nth-child(even) {
+  background-color: #16364d;
+}
+
+/* Resalta las filas al pasar el cursor */
+.panel-experimentos__tabla tbody tr:hover {
+  background-color: #20506a;
+}
+
+/* Valores numéricos */
+.panel-experimentos__tabla tbody td {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mensajes de error */
+.panel-experimentos p[role="alert"] {
+  margin-top: 16px;
+
+  color: #ff9d9d;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Adaptación a pantallas pequeñas */
+@media (max-width: 600px) {
+
+  .panel-experimentos {
+    margin: 15px auto;
+    padding: 14px;
+  }
+
+  .panel-experimentos h2 {
+    font-size: 1.15rem;
+  }
+
+  .panel-experimentos__controles {
+    gap: 10px;
+  }
+
+  .panel-experimentos__controles button {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .panel-experimentos__tabla {
+    font-size: 0.8rem;
+  }
+
+  .panel-experimentos__tabla th,
+  .panel-experimentos__tabla td {
+    padding: 10px 8px;
+  }
+}

@@ -318,3 +318,66 @@
     font-size: 0.95rem;
   }
 }
+
+
+/*
+ * Estilos del mapa probabilístico.
+ *
+ * Se aplican únicamente a las celdas que
+ * muestran probabilidades en el tablero enemigo.
+ */
+
+/* Porcentajes en las celdas disponibles */
+.tablero .celda--probabilidad {
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* Resalta la posición recomendada */
+.tablero .celda--recomendada {
+  outline: 3px solid #ffffff;
+  outline-offset: -4px;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.65);
+}
+
+/* Información debajo del tablero enemigo */
+.tablero-ayuda-probabilistica {
+  margin-top: 18px;
+  color: #c5e2f1;
+  text-align: center;
+}
+
+.tablero-ayuda-probabilistica p {
+  margin: 8px 0;
+  font-size: 0.85rem;
+}
+
+.tablero-ayuda-probabilistica strong {
+  color: #ffdf58;
+}
+
+/* Escala de colores de menor a mayor probabilidad */
+.tablero-escala-probabilidades {
+  width: 180px;
+  height: 12px;
+  margin: 12px auto;
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+
+  background: linear-gradient(
+    to right,
+    #168a39 0%,
+    #9cc324 25%,
+    #ffd000 50%,
+    #f58220 75%,
+    #d92323 100%
+  );
+}
+
+/* Ajusta los porcentajes en pantallas pequeñas */
+@media (max-width: 480px) {
+  .tablero .celda--probabilidad {
+    font-size: 0.55rem;
+  }
+}

@@ -1,0 +1,173 @@
+
+/*
+ * Archivo: panelHistorial.css
+ *
+ * Descripción:
+ * Estilos del historial de decisiones de Batalla Naval.
+ */
+
+/* Contenedor principal */
+.panel-historial {
+  width: min(1100px, 95%);
+  margin: 25px auto;
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    180deg,
+    #10283d,
+    #091b2c
+  );
+
+  border: 2px solid #087fb8;
+  border-radius: 16px;
+
+  color: #e7f7ff;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Título */
+.panel-historial h2 {
+  margin: 0 0 12px;
+
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+/* Descripción */
+.panel-historial__descripcion {
+  margin: 10px 0 18px;
+
+  color: #a9d6ec;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Resumen de decisiones */
+.panel-historial__resumen {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* Indicadores del resumen */
+.panel-historial__resumen p {
+  margin: 0;
+  padding: 12px 18px;
+
+  background-color: #16364d;
+  border: 1px solid #315a72;
+  border-radius: 9px;
+
+  color: #e7f7ff;
+  text-align: center;
+}
+
+/* Valores del resumen */
+.panel-historial__resumen strong {
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mensaje sin movimientos */
+.panel-historial__vacio {
+  padding: 20px;
+
+  color: #a9d6ec;
+  text-align: center;
+}
+
+/* Contenedor desplazable de la tabla */
+.panel-historial__contenido {
+  width: 100%;
+  max-height: 350px;
+  overflow: auto;
+
+  border: 1px solid #315a72;
+  border-radius: 8px;
+}
+
+/* Tabla */
+.panel-historial__tabla {
+  width: 100%;
+  min-width: 720px;
+
+  border-collapse: collapse;
+
+  background-color: #102b41;
+  color: #e7f7ff;
+
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Encabezados */
+.panel-historial__tabla thead {
+  background-color: #075983;
+}
+
+/* Mantiene visibles los encabezados al desplazarse */
+.panel-historial__tabla thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  background-color: #075983;
+}
+
+/* Celdas */
+.panel-historial__tabla th,
+.panel-historial__tabla td {
+  padding: 12px 10px;
+
+  border: 1px solid #315a72;
+}
+
+/* Alterna el fondo de las filas */
+.panel-historial__tabla tbody tr:nth-child(even) {
+  background-color: #16364d;
+}
+
+/* Resalta el movimiento al pasar el cursor */
+.panel-historial__tabla tbody tr:hover {
+  background-color: #20506a;
+}
+
+/* Nota explicativa */
+.panel-historial__nota {
+  margin: 16px 0 0;
+
+  color: #a9d6ec;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* Adaptación a pantallas pequeñas */
+@media (max-width: 600px) {
+
+  .panel-historial {
+    padding: 14px;
+    margin: 15px auto;
+  }
+
+  .panel-historial h2 {
+    font-size: 1.15rem;
+  }
+
+  .panel-historial__resumen {
+    flex-direction: column;
+  }
+
+  .panel-historial__tabla {
+    font-size: 0.8rem;
+  }
+
+  .panel-historial__tabla th,
+  .panel-historial__tabla td {
+    padding: 10px 8px;
+  }
+}
