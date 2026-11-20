@@ -1,0 +1,38 @@
+[
+  {
+    "simulaciones": 100,
+    "repeticiones": 1,
+    "tiempoEstimacionMs": 98.42,
+    "configuracionesValidas": 100,
+    "disparosNecesarios": 53,
+    "victorias": 1,
+    "tiempoPartidaMs": 4209.65
+  },
+  {
+    "simulaciones": 1000,
+    "repeticiones": 1,
+    "tiempoEstimacionMs": 695.27,
+    "configuracionesValidas": 1000,
+    "disparosNecesarios": 40,
+    "victorias": 1,
+    "tiempoPartidaMs": 26409.61
+  },
+  {
+    "simulaciones": 5000,
+    "repeticiones": 1,
+    "tiempoEstimacionMs": 2632.27,
+    "configuracionesValidas": 5000,
+    "disparosNecesarios": 51,
+    "victorias": 1,
+    "tiempoPartidaMs": 145900.01
+  },
+  {
+    "simulaciones": 10000,
+    "repeticiones": 1,
+    "tiempoEstimacionMs": 5353.41,
+    "configuracionesValidas": 10000,
+    "disparosNecesarios": 37,
+    "victorias": 1,
+    "tiempoPartidaMs": 261013.66
+  }
+]

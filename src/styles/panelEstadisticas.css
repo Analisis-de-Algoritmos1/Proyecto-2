@@ -1,0 +1,126 @@
+
+/*
+ * Archivo: panelEstadisticas.css
+ *
+ * Descripción:
+ * Define la apariencia del panel de estadísticas
+ * de la partida de Batalla Naval.
+ */
+
+/* Contenedor principal del panel */
+.panel-estadisticas {
+  width: min(950px, 95%);
+  margin: 25px auto;
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  background: linear-gradient(180deg, #10283d, #091b2c);
+  border: 2px solid #087fb8;
+  border-radius: 16px;
+
+  color: #e7f7ff;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Título del panel */
+.panel-estadisticas h2 {
+  margin: 0 0 12px;
+
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Descripción */
+.panel-estadisticas > p {
+  color: #a9d6ec;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Contenedor de la tabla */
+.panel-estadisticas__contenido {
+  width: 100%;
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+/* Tabla de estadísticas */
+.panel-estadisticas__tabla {
+  width: 100%;
+  border-collapse: collapse;
+
+  background-color: #102b41;
+  color: #e7f7ff;
+
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Encabezado de la tabla */
+.panel-estadisticas__tabla thead {
+  background-color: #075983;
+}
+
+/* Celdas y encabezados */
+.panel-estadisticas__tabla th,
+.panel-estadisticas__tabla td {
+  padding: 13px 12px;
+
+  border: 1px solid #315a72;
+}
+
+/* Nombres de las estadísticas */
+.panel-estadisticas__tabla tbody th {
+  text-align: left;
+  font-weight: 600;
+}
+
+/* Filas alternadas */
+.panel-estadisticas__tabla tbody tr:nth-child(even) {
+  background-color: #16364d;
+}
+
+/* Resalta las filas al pasar el cursor */
+.panel-estadisticas__tabla tbody tr:hover {
+  background-color: #20506a;
+}
+
+/* Valores numéricos */
+.panel-estadisticas__tabla tbody td {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Nota explicativa */
+.panel-estadisticas .panel-estadisticas__nota {
+  margin: 16px 0 0;
+
+  color: #a9d6ec;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* Adaptación a pantallas pequeñas */
+@media (max-width: 600px) {
+
+  .panel-estadisticas {
+    padding: 14px;
+    margin: 15px auto;
+  }
+
+  .panel-estadisticas h2 {
+    font-size: 1.15rem;
+  }
+
+  .panel-estadisticas__tabla {
+    font-size: 0.8rem;
+  }
+
+  .panel-estadisticas__tabla th,
+  .panel-estadisticas__tabla td {
+    padding: 10px 7px;
+  }
+}
