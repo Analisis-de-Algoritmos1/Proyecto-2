@@ -1,0 +1,71 @@
+
+name: Deploy Batalla Naval to GitHub Pages
+
+# Ejecuta el despliegue cuando se actualiza main.
+on:
+  push:
+    branches: ["main"]
+
+  # También permite ejecutarlo manualmente.
+  workflow_dispatch:
+
+# Permisos necesarios para publicar en GitHub Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Evita ejecuciones simultáneas del despliegue.
+concurrency:
+  group: "github-pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Compilar y publicar Batalla Naval
+
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+
+      # Obtiene los archivos del repositorio.
+      - name: Obtener código fuente
+        uses: actions/checkout@v4
+
+      # Prepara Node.js para ejecutar Vite.
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      # Instala las dependencias del proyecto.
+      - name: Instalar dependencias
+        run: npm ci
+
+      # Verifica la calidad del código.
+      - name: Ejecutar ESLint
+        run: npm run lint
+
+      # Genera los archivos de producción.
+      - name: Compilar aplicación
+        run: npm run build
+
+      # Configura el entorno de GitHub Pages.
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      # Prepara los archivos generados por Vite.
+      - name: Preparar archivos de publicación
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist"
+
+      # Publica la aplicación.
+      - name: Publicar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
